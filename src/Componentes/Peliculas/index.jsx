@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './style.css'; // Asegúrate de tener este archivo
+import { Link } from 'react-router-dom';
+import './style.css';
 
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://ghibliapi.vercel.app/films')
+    fetch('https://ghibliapi.dev/films')
       .then((response) => response.json())
       .then((data) => {
         setPeliculas(data);
@@ -18,21 +19,27 @@ const Peliculas = () => {
       });
   }, []);
 
-  if (loading) {
-    return <div className="loading">Cargando películas...</div>;
-  }
+  if (loading) return <div className="loading">Cargando películas...</div>;
 
   return (
     <div className="peliculas-container">
       <h1>Películas de Studio Ghibli</h1>
       <div className="peliculas-grid">
         {peliculas.map((pelicula) => (
-          <div key={pelicula.id} className="pelicula-card">
+          <Link 
+            to={`/peliculas/${pelicula.id}`} 
+            key={pelicula.id} 
+            className="pelicula-card"
+          >
+            <img
+              src={pelicula.image} // Usa la imagen directa de la API
+              alt={pelicula.title}
+              onError={(e) => { 
+                e.target.src = 'https://via.placeholder.com/300x400?text=Poster+no+disponible';
+              }}
+            />
             <h3>{pelicula.title}</h3>
-            <p>Director: {pelicula.director}</p>
-            <p>Año: {pelicula.release_date}</p>
-            <p>⭐ {pelicula.rt_score}/100</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

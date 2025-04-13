@@ -1,0 +1,70 @@
+/* Estilos generales */
+.peliculas-container, .detalle-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+  }
+  
+  /* Grid de películas */
+  .peliculas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .pelicula-card {
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.3s;
+  }
+  
+  .pelicula-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .pelicula-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Vista detalle */
+  .detalle-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .detalle-poster {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+  }
+  
+  .detalle-info {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .btn-volver {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .btn-volver:hover {
+    background: #1a252f;
+  }
