@@ -1,0 +1,26 @@
+.c-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1c1c1c;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 2px solid #444;
+    z-index: 1000;
+  }
+  
+  .c-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  
+  .c-menu a:hover {
+    color: #87CEEB;
+  }
+  
