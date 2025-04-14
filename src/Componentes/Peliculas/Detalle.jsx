@@ -36,6 +36,7 @@ const Detalle = () => {
       />
       <div className="detalle-info">
         <h1>{pelicula.title}</h1>
+        <p><string>Titulo original</string> {pelicula.original_title}</p>
         <p><strong>Director:</strong> {pelicula.director}</p>
         <p><strong>Año:</strong> {pelicula.release_date}</p>
         <p><strong>Puntuación:</strong> ⭐ {pelicula.rt_score}/100</p>

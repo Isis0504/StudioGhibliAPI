@@ -1,0 +1,21 @@
+.detalle-img-container {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .detalle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .detalle-img-placeholder {
+    font-size: 120px;
+    color: #666;
+  }

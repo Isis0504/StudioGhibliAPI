@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ghibliCharacters from '../../data/ghibliCharacters.json';
+import ghibliCharacters from '../../Data/ghibliCharacters.json';
 import './style.css';
 
 const Personajes = () => {
@@ -20,6 +20,12 @@ const Personajes = () => {
       });
   }, []);
 
+  // Función para buscar la imagen por nombre
+  const getCharacterImage = (name) => {
+    const character = ghibliCharacters.find(char => char.name === name);
+    return character?.image || `https://via.placeholder.com/150?text=${name.charAt(0)}`;
+  };
+
   if (loading) return <div className="loading">Cargando personajes...</div>;
 
   return (
@@ -32,9 +38,8 @@ const Personajes = () => {
             key={personaje.id} 
             className="personaje-card"
           >
-
             <img
-              src={ghibliCharacters[personaje.name] || `https://via.placeholder.com/150?text=${personaje.name.charAt(0)}`}
+              src={getCharacterImage(personaje.name)}
               alt={personaje.name}
               className="personaje-img"
               onError={(e) => { 
