@@ -8,6 +8,7 @@ function Menu() {
       <Link to="/">Inicio</Link>
       <Link to="/Peliculas">Películas</Link>
       <Link to="/Personajes">Personajes</Link>
+      <Link to="/Locaciones">Locaciones</Link>
       <Link to="/Favoritos">Favoritos</Link>
       <Link to="/TestGhibli">Test Ghibli</Link>
       <Link to="/Sorpresa">Sorpresa</Link>

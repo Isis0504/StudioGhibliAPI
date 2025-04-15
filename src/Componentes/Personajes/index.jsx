@@ -20,10 +20,20 @@ const Personajes = () => {
       });
   }, []);
 
-  // Función para buscar la imagen por nombre
   const getCharacterImage = (name) => {
-    const character = ghibliCharacters.find(char => char.name === name);
-    return character?.image || `https://via.placeholder.com/150?text=${name.charAt(0)}`;
+    const character = ghibliCharacters.find(char => 
+      char.name.toLowerCase() === name.toLowerCase()
+    );
+    
+    if (character?.image) return character.image;
+    
+    // Obtener iniciales (primera letra de cada palabra para nombres compuestos)
+    const initials = name.split(' ')
+      .filter(word => word.length > 0)
+      .map(word => word[0].toUpperCase())
+      .join('');
+    
+    return `https://via.placeholder.com/150/cccccc/333333?text=${encodeURIComponent(initials)}`;
   };
 
   if (loading) return <div className="loading">Cargando personajes...</div>;
@@ -43,7 +53,11 @@ const Personajes = () => {
               alt={personaje.name}
               className="personaje-img"
               onError={(e) => { 
-                e.target.src = `https://via.placeholder.com/150?text=${personaje.name.charAt(0)}`;
+                const initials = personaje.name.split(' ')
+                  .filter(word => word.length > 0)
+                  .map(word => word[0].toUpperCase())
+                  .join('');
+                e.target.src = `https://via.placeholder.com/150/cccccc/333333?text=${encodeURIComponent(initials)}`;
               }}
             />
             <h3>{personaje.name}</h3>
