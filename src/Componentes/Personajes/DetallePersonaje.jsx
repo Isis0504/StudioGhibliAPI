@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import ghibliCharacters from '../../Data/ghibliCharacters.json'; // Importa el JSON
+import ghibliCharacters from '../../Data/ghibliCharacters.json';
 import './styleDet.css';
 
 const DetallePersonajes = () => {
   const { id } = useParams();
   const [personaje, setPersonaje] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [esFavorito, setEsFavorito] = useState(false);
 
   useEffect(() => {
     fetch(`https://ghibliapi.dev/people/${id}`)
@@ -21,10 +22,13 @@ const DetallePersonajes = () => {
       });
   }, [id]);
 
-  // Función para obtener la imagen del personaje desde el JSON
   const getCharacterImage = (name) => {
     const character = ghibliCharacters.find(char => char.name === name);
     return character?.image || null;
+  };
+
+  const toggleFavorito = () => {
+    setEsFavorito(!esFavorito);
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
@@ -50,13 +54,23 @@ const DetallePersonajes = () => {
           </div>
         )}
       </div>
+
       <div className="detalle-info">
         <h1>{personaje.name}</h1>
         <p><strong>Género:</strong> {personaje.gender || 'No especificado'}</p>
         <p><strong>Edad:</strong> {personaje.age || 'Desconocida'}</p>
         <p><strong>Color de ojos:</strong> {personaje.eye_color || 'Desconocido'}</p>
         <p><strong>Color de cabello:</strong> {personaje.hair_color || 'Desconocido'}</p>
-        <Link to="/personajes" className="btn-volver">← Volver</Link>
+
+        <div className="botones-detalle">
+        <div className="detalle-botones">
+  <Link to="/personajes" className="btn-volver">← Volver</Link>
+  <button onClick={toggleFavorito} className="btn-favorito-solo-icono">
+    {esFavorito ? '❤️' : '🤍'}
+  </button>
+</div>
+
+        </div>
       </div>
     </div>
   );

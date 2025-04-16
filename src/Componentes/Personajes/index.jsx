@@ -6,6 +6,9 @@ import './style.css';
 const Personajes = () => {
   const [personajes, setPersonajes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [inputNombre, setInputNombre] = useState('');
+  const [filtroGenero, setFiltroGenero] = useState('');
+  const [filtroEdad, setFiltroEdad] = useState('');
 
   useEffect(() => {
     fetch('https://ghibliapi.dev/people')
@@ -19,6 +22,26 @@ const Personajes = () => {
         setLoading(false);
       });
   }, []);
+
+  // Función que filtra los personajes por nombre, género y edad
+  const personajesFiltrados = personajes.filter((p) => {
+    const coincideNombre = p.name.toLowerCase().includes(inputNombre.toLowerCase());
+    const coincideGenero = filtroGenero === '' || p.gender.toLowerCase() === filtroGenero.toLowerCase();
+    const coincideEdad = filtroEdad === '' || p.age?.toString().startsWith(filtroEdad);
+    return coincideNombre && coincideGenero && coincideEdad;
+  });
+
+  const manejarBusquedaNombre = (e) => {
+    setInputNombre(e.target.value);
+  };
+
+  const manejarFiltroGenero = (e) => {
+    setFiltroGenero(e.target.value);
+  };
+
+  const manejarFiltroEdad = (e) => {
+    setFiltroEdad(e.target.value);
+  };
 
   const getCharacterImage = (name) => {
     const character = ghibliCharacters.find(char => 
@@ -41,8 +64,36 @@ const Personajes = () => {
   return (
     <div className="personajes-container">
       <h1>Personajes de Studio Ghibli</h1>
+
+      <div className="filtro-personaje">
+        <input
+          type="text"
+          placeholder="Buscar personaje"
+          value={inputNombre}
+          onChange={manejarBusquedaNombre}
+          className="busqueda-input"
+        />
+        <select
+          value={filtroGenero}
+          onChange={manejarFiltroGenero}
+          className="busqueda-input"
+        >
+          <option value="">Filtrar por género</option>
+          <option value="Male">Masculino</option>
+          <option value="Female">Femenino</option>
+          <option value="Other">Otro</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Filtrar por edad"
+          value={filtroEdad}
+          onChange={manejarFiltroEdad}
+          className="busqueda-input"
+        />
+      </div>
+
       <div className="personajes-grid">
-        {personajes.map((personaje) => (
+        {personajesFiltrados.map((personaje) => (
           <Link 
             to={`/personajes/${personaje.id}`} 
             key={personaje.id} 
@@ -62,6 +113,7 @@ const Personajes = () => {
             />
             <h3>{personaje.name}</h3>
             <p>{personaje.gender || 'Género no especificado'}</p>
+            <p>{personaje.age || 'Edad no especificada'}</p>
           </Link>
         ))}
       </div>

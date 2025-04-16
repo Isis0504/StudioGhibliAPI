@@ -5,6 +5,31 @@
   align-items: center;
 }
 
+.filtro-locaciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.busqueda-input {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.filtro-select {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
 .locacion-card {
   display: flex;
   flex-direction: row;

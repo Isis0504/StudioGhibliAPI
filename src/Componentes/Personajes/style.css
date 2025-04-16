@@ -6,6 +6,50 @@
     padding: 20px;
   }
   
+  .filtro-personaje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .busqueda-input {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .personajes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .personaje-card {
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+  
+  .personaje-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 50px;
+  }  
+
   .personaje-card {
     text-align: center;
     text-decoration: none;
