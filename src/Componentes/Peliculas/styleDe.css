@@ -5,35 +5,51 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-  }
-  
-  .detalle-poster {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 8px;
+}
+
+/* SOLO CAMBIÉ ESTE BLOQUE (imagen rectangular) */
+.detalle-poster {
+    width: 300px; /* Ancho fijo */
+    height: 450px; /* Altura para proporción 2:3 */
+    object-fit: cover; /* Mantiene relación de aspecto */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .detalle-info {
+}
+
+.detalle-img {
+  border-radius: 8px;
+}
+
+/* El resto permanece EXACTAMENTE igual */
+.detalle-info {
     flex: 1;
-  }
-  
-  .loading, .error {
+}
+
+.loading, .error {
     text-align: center;
     padding: 50px;
     font-size: 1.2rem;
-  }
-  
-  .btn-volver {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #2c3e50;
-    color: white;
-    border-radius: 4px;
+}
+
+ .btn-volver {
+    background-color: #ddd;
+    padding: 10px 15px;
+    border-radius: 6px;
     text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-left: 80px;
   }
-  
-  .btn-volver:hover {
+
+.btn-volver:hover {
     background: #1a252f;
-  }
+} 
+
+.detalle-botones {
+  display: flex;
+  padding: 10px 260px;
+  justify-content: center;  
+  align-items: center;      
+  gap: 1rem;                
+  margin-top: 20px;         
+}

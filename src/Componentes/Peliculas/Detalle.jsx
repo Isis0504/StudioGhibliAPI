@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { AppContext } from '../../Contexto/contexto';
 import './styleDe.css';
 
 const Detalle = () => {
   const { id } = useParams();
   const [pelicula, setPelicula] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [esFavorita, setEsFavorita] = useState(false);
+  const { favoritos, toggleFavorito } = useContext(AppContext);
+  
+  const esFavorita = favoritos.peliculas?.some(fav => fav.id === pelicula?.id) || false;
 
   useEffect(() => {
     fetch(`https://ghibliapi.dev/films/${id}`)
@@ -24,20 +27,18 @@ const Detalle = () => {
       });
   }, [id]);
 
-  const toggleFavorita = () => {
-    setEsFavorita(!esFavorita);
-  };
-
-  if (loading) return <div className="loading">Cargando detalles...</div>;
-  if (!pelicula) return <div className="error">No se encontró la película</div>;
+  if (loading) return <div className="loading">Cargando...</div>;
+  if (!pelicula) return <div className="error">Película no encontrada</div>;
 
   return (
     <div className="detalle-container">
-      <img 
-        src={pelicula.image} 
-        alt={pelicula.title} 
-        className="detalle-poster"
-      />
+      <div className="detalle-poster">
+        <img 
+          src={pelicula.image} 
+          alt={pelicula.title}
+          className="detalle-img"
+        />
+      </div>
 
       <div className="detalle-info">
         <h1>{pelicula.title}</h1>
@@ -47,11 +48,16 @@ const Detalle = () => {
         <p><strong>Puntuación:</strong> ⭐ {pelicula.rt_score}/100</p>
         <p><strong>Descripción:</strong> {pelicula.description}</p>
 
-        <div className="detalle-botones">
-          <Link to="/peliculas" className="btn-volver">← Volver</Link>
-          <button onClick={toggleFavorita} className="btn-favorito-solo-icono">
-            {esFavorita ? '❤️' : '🤍'}
-          </button>
+         <div className="botones-detalle">
+          <div className="detalle-botones">
+            <Link to="/peliculas" className="btn-volver">← Volver</Link>
+            <button 
+              onClick={() => toggleFavorito(pelicula, 'peliculas')} 
+              className="btn-favorito-solo-icono"
+            >
+              {esFavorita ? '❤️' : '🤍'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,8 @@
 /* Estilos para las tarjetas de personajes */
+* {
+  background-color: linear-gradient(135deg, #8181c1 0%, #16213e 50%, #0f3460 100%);
+}
+
 .personajes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

@@ -1,6 +1,5 @@
-import { useState} from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import { AppProvider } from './Contexto/contexto';
 import Inicio from './Componentes/Inicio';
 import Peliculas from './Componentes/Peliculas';
 import Detalle from './Componentes/Peliculas/Detalle';
@@ -11,25 +10,26 @@ import Favoritos from './Componentes/Favoritos';
 import TestGhibli from './Componentes/TestGhibli';
 import Sorpresa from './Componentes/Sorpresa';
 import Menu from './Componentes/Menu';
-
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Menu />
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/peliculas" element={<Peliculas />} />
-        <Route path="/peliculas/:id" element={<Detalle />} />
-        <Route path="/personajes" element={<Personajes />} />
-        <Route path="/personajes/:id" element={<DetallePersonaje />} />
-        <Route path="/locaciones" element={<Locaciones />} />
-        <Route path="/Favoritos" element={<Favoritos />} />
-        <Route path="/TestGhibli" element={<TestGhibli />} />
-        <Route path="/Sorpresa" element={<Sorpresa />} />
-      </Routes>
-    </Router>
+    <AppProvider>
+      <Router>
+        <Menu />
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/peliculas" element={<Peliculas />} />
+          <Route path="/peliculas/:id" element={<Detalle />} />
+          <Route path="/personajes" element={<Personajes />} />
+          <Route path="/personajes/:id" element={<DetallePersonaje />} />
+          <Route path="/locaciones" element={<Locaciones />} />
+          <Route path="/favoritos" element={<Favoritos />} />
+          <Route path="/TestGhibli" element={<TestGhibli />} />
+          <Route path="/Sorpresa" element={<Sorpresa />} />
+        </Routes>
+      </Router>
+    </AppProvider>
   );
 }
 

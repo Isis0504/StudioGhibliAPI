@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { AppContext } from '../../Contexto/contexto';
 import ghibliCharacters from '../../Data/ghibliCharacters.json';
 import './styleDet.css';
 
@@ -7,19 +8,27 @@ const DetallePersonajes = () => {
   const { id } = useParams();
   const [personaje, setPersonaje] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [esFavorito, setEsFavorito] = useState(false);
+  const { favoritos = { personajes: [], peliculas: [] }, toggleFavorito } = useContext(AppContext);
+  
+  // Verificación segura de favoritos
+  const esFavorito = favoritos.personajes.some(fav => fav.id === personaje?.id);
 
   useEffect(() => {
-    fetch(`https://ghibliapi.dev/people/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchPersonaje = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`https://ghibliapi.dev/people/${id}`);
+        if (!response.ok) throw new Error("Personaje no encontrado");
+        const data = await response.json();
         setPersonaje(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching personaje:", error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchPersonaje();
   }, [id]);
 
   const getCharacterImage = (name) => {
@@ -27,8 +36,11 @@ const DetallePersonajes = () => {
     return character?.image || null;
   };
 
-  const toggleFavorito = () => {
-    setEsFavorito(!esFavorito);
+  const handleFavorito = () => {
+    if (personaje) {
+      console.log("Agregando a favoritos:", personaje); // Debug
+      toggleFavorito(personaje, 'personajes');
+    }
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
@@ -63,13 +75,15 @@ const DetallePersonajes = () => {
         <p><strong>Color de cabello:</strong> {personaje.hair_color || 'Desconocido'}</p>
 
         <div className="botones-detalle">
-        <div className="detalle-botones">
-  <Link to="/personajes" className="btn-volver">← Volver</Link>
-  <button onClick={toggleFavorito} className="btn-favorito-solo-icono">
-    {esFavorito ? '❤️' : '🤍'}
-  </button>
-</div>
-
+          <div className="detalle-botones1">
+            <Link to="/personajes" className="btn-volver">← Volver</Link>
+            <button 
+              onClick={handleFavorito} 
+              className="btn-favorito-solo-icono"
+            >
+              {esFavorito ? '❤️' : '🤍'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

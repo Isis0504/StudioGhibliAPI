@@ -5,9 +5,21 @@ import './style.css';
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [inputAnio, setInputAnio] = useState('');
   const [inputTitulo, setInputTitulo] = useState('');
-  const [filtroAnio, setFiltroAnio] = useState('');
+  const [filtroRango, setFiltroRango] = useState('');
+
+  const rangos = [
+  { label: 'Todos los años', value: '' },
+  { label: '1980 - 1984', value: '1980-1984' },
+  { label: '1985 - 1989', value: '1985-1989' },
+  { label: '1990 - 1994', value: '1990-1994' },
+  { label: '1995 - 1999', value: '1995-1999' },
+  { label: '2000 - 2004', value: '2000-2004' },
+  { label: '2005 - 2009', value: '2005-2009' },
+  { label: '2010 - 2014', value: '2010-2014' },
+  { label: '2015 - 2019', value: '2015-2019' },
+  { label: '2020 - 2025', value: '2020-2025' }
+];
 
   useEffect(() => {
     fetch('https://ghibliapi.dev/films')
@@ -22,24 +34,25 @@ const Peliculas = () => {
       });
   }, []);
 
-  // Función que filtra las películas por título y año
   const peliculasFiltradas = peliculas.filter((p) => {
-    const coincideAnio = filtroAnio === '' || p.release_date.includes(filtroAnio);
-    const coincideTitulo = p.title.toLowerCase().includes(inputTitulo.toLowerCase());
-    return coincideAnio && coincideTitulo;
-  });
+    const tituloCoincide = p.title.toLowerCase().includes(inputTitulo.toLowerCase());
 
-  const manejarFiltro = () => {
-    setFiltroAnio(inputAnio);
-  };
+    let anioCoincide = true;
+    if (filtroRango !== '') {
+      const [inicio, fin] = filtroRango.split('-').map(Number);
+      const anio = parseInt(p.release_date);
+      anioCoincide = anio >= inicio && anio <= fin;
+    }
+
+    return tituloCoincide && anioCoincide;
+  });
 
   const manejarBusquedaTitulo = (e) => {
     setInputTitulo(e.target.value);
   };
 
-  const manejarFiltroAnio = (e) => {
-    setInputAnio(e.target.value);
-    setFiltroAnio(e.target.value);
+  const manejarSeleccionRango = (e) => {
+    setFiltroRango(e.target.value);
   };
 
   if (loading) return <div className="loading">Cargando películas...</div>;
@@ -51,19 +64,19 @@ const Peliculas = () => {
       <div className="filtro-anio">
         <input
           type="text"
-          placeholder="Buscar pelicula"
+          placeholder="Buscar película"
           value={inputTitulo}
           onChange={manejarBusquedaTitulo}
           className="busqueda-input"
         />
-        <input
-          type="text"
-          placeholder="Filtrar por año"
-          value={inputAnio}
-          onChange={manejarFiltroAnio}
-          className="busqueda-input"
-        />
-        
+
+        <select value={filtroRango} onChange={manejarSeleccionRango} className="busqueda-input">
+          {rangos.map((rango) => (
+            <option key={rango.value} value={rango.value}>
+              {rango.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="peliculas-grid">

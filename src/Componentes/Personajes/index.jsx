@@ -23,39 +23,45 @@ const Personajes = () => {
       });
   }, []);
 
-  // Función que filtra los personajes por nombre, género y edad
   const personajesFiltrados = personajes.filter((p) => {
     const coincideNombre = p.name.toLowerCase().includes(inputNombre.toLowerCase());
     const coincideGenero = filtroGenero === '' || p.gender.toLowerCase() === filtroGenero.toLowerCase();
-    const coincideEdad = filtroEdad === '' || p.age?.toString().startsWith(filtroEdad);
+
+    let coincideEdad = true;
+
+    if (filtroEdad) {
+      const edad = p.age;
+
+      if (filtroEdad === 'no-numerica') {
+        // Filtrar personajes cuya edad no es un número
+        coincideEdad = isNaN(parseInt(edad));
+      } else {
+        // Filtrar por rango numérico
+        const [min, max] = filtroEdad.split('-').map(Number);
+        const edadNum = parseInt(edad);
+        coincideEdad = !isNaN(edadNum) && edadNum >= min && edadNum <= max;
+      }
+    }
+
     return coincideNombre && coincideGenero && coincideEdad;
   });
 
-  const manejarBusquedaNombre = (e) => {
-    setInputNombre(e.target.value);
-  };
-
-  const manejarFiltroGenero = (e) => {
-    setFiltroGenero(e.target.value);
-  };
-
-  const manejarFiltroEdad = (e) => {
-    setFiltroEdad(e.target.value);
-  };
+  const manejarBusquedaNombre = (e) => setInputNombre(e.target.value);
+  const manejarFiltroGenero = (e) => setFiltroGenero(e.target.value);
+  const manejarFiltroEdad = (e) => setFiltroEdad(e.target.value);
 
   const getCharacterImage = (name) => {
-    const character = ghibliCharacters.find(char => 
+    const character = ghibliCharacters.find(char =>
       char.name.toLowerCase() === name.toLowerCase()
     );
-    
+
     if (character?.image) return character.image;
-    
-    // Obtener iniciales (primera letra de cada palabra para nombres compuestos)
+
     const initials = name.split(' ')
       .filter(word => word.length > 0)
       .map(word => word[0].toUpperCase())
       .join('');
-    
+
     return `https://via.placeholder.com/150/cccccc/333333?text=${encodeURIComponent(initials)}`;
   };
 
@@ -83,27 +89,37 @@ const Personajes = () => {
           <option value="Female">Femenino</option>
           <option value="Other">Otro</option>
         </select>
-        <input
-          type="text"
-          placeholder="Filtrar por edad"
+        <select
           value={filtroEdad}
           onChange={manejarFiltroEdad}
           className="busqueda-input"
-        />
+        >
+          <option value="">Todas las edades</option>
+          <option value="1-10">1 - 10</option>
+          <option value="11-20">11 - 20</option>
+          <option value="21-30">21 - 30</option>
+          <option value="31-40">31 - 40</option>
+          <option value="41-50">41 - 50</option>
+          <option value="51-60">51 - 60</option>
+          <option value="61-70">61 - 70</option>
+          <option value="71-80">71 - 80</option>
+          <option value="81-90">81 - 90</option>
+          <option value="no-numerica">Edad no numérica</option>
+        </select>
       </div>
 
       <div className="personajes-grid">
         {personajesFiltrados.map((personaje) => (
-          <Link 
-            to={`/personajes/${personaje.id}`} 
-            key={personaje.id} 
+          <Link
+            to={`/personajes/${personaje.id}`}
+            key={personaje.id}
             className="personaje-card"
           >
             <img
               src={getCharacterImage(personaje.name)}
               alt={personaje.name}
               className="personaje-img"
-              onError={(e) => { 
+              onError={(e) => {
                 const initials = personaje.name.split(' ')
                   .filter(word => word.length > 0)
                   .map(word => word[0].toUpperCase())
