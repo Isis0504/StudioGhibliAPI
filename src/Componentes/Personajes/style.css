@@ -17,6 +17,9 @@
     gap: 10px;
     margin-bottom: 30px;
     flex-wrap: wrap;
+    ::placeholder {
+    color: rgba(255, 255, 255, 0.958); /* Blanco con 70% de opacidad */
+  }
   }
   
   .busqueda-input {

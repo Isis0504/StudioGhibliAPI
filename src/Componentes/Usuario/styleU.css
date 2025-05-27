@@ -1,0 +1,126 @@
+/* Usuario.css */
+.usuario-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.usuario-container h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  border-bottom: 2px solid #6366f1;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.usuario-form {
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(225, 118, 249, 0.237);
+  margin-bottom: 2rem;
+}
+
+.usuario-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.usuario-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.usuario-form input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.usuario-form button {
+  background-color: #6366f1;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.usuario-form button:hover {
+  background-color: #4f46e5;
+}
+
+.usuario-logout {
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.usuario-logout h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.usuario-logout button {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.usuario-form input{
+    background-color:  rgba(99, 101, 241, 0.276);
+    color: #333;
+}
+
+.usuario-logout button:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .usuario-container {
+    padding: 1rem;
+  }
+  
+  .usuario-form,
+  .usuario-logout {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .usuario-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .usuario-form input,
+  .usuario-form button,
+  .usuario-logout button {
+    padding: 0.65rem;
+  }
+}
